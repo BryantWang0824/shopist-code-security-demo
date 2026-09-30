@@ -31,3 +31,9 @@ def filter_products():
 
 def get_all_products():
     return []
+
+
+# VULN NEW (PR gate retest): eval on user input — Critical code injection
+@app.route("/pr-gate/compute")
+def pr_gate_compute():
+    return str(eval(request.args.get("expr", "")))
