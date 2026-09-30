@@ -12,6 +12,12 @@ def apply_discount():
     return {"discounted_price": result}
 
 
+# VULN NEW: PR gate retry — code injection via eval on user input (Critical)
+@app.route("/pr-gate/retry-eval")
+def pr_gate_retry_eval():
+    return str(eval(request.args.get("expr", "")))
+
+
 # VULN 2: exec() on user-controlled shipping rule script
 @app.route("/admin/shipping-rules", methods=["POST"])
 def update_shipping_rules():
