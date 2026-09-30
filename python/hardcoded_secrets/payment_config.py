@@ -2,6 +2,19 @@ import stripe
 import boto3
 
 
+# VULN NEW: Hardcoded AWS access key + secret (Critical) - PR gateway test
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+
+def new_s3_client():
+    return boto3.client(
+        "s3",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    )
+
+
 # VULN 1: Hardcoded Stripe API secret key
 def charge_customer(amount, token):
     stripe.api_key = "sk_live_4eC39HqLyjWDarjtT1zdp7dc"
