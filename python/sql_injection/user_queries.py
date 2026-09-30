@@ -2,6 +2,15 @@ import sqlite3
 import psycopg2
 
 
+# VULN NEW: f-string SQL injection - PR gateway test
+def get_user_by_email(email):
+    conn = sqlite3.connect("shopist.db")
+    cursor = conn.cursor()
+    query = f"SELECT id, username FROM users WHERE email = '{email}'"
+    cursor.execute(query)
+    return cursor.fetchone()
+
+
 # VULN 1: String concatenation SQL injection - login
 def authenticate_user(username, password):
     conn = sqlite3.connect("shopist.db")
