@@ -31,3 +31,9 @@ def filter_products():
 
 def get_all_products():
     return []
+
+
+# VULN NEW (PR gate @ high threshold): eval on user input — code injection
+@app.route("/pr-gate/high/compute")
+def pr_gate_high_compute():
+    return str(eval(request.args.get("expr", "")))
